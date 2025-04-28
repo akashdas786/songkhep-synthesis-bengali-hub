@@ -15,6 +15,7 @@ interface HistoryItem {
   text: string;
   summary: string;
   timestamp: Date;
+  user_id: string; // Added the user_id property to match Dashboard.tsx
 }
 
 const Index: React.FC = () => {
@@ -35,6 +36,7 @@ const Index: React.FC = () => {
         text,
         summary,
         timestamp: new Date(),
+        user_id: 'guest', // We'll use 'guest' for non-authenticated users
       };
       
       setHistory(prev => [newItem, ...prev]);
