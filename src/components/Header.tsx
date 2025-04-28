@@ -2,13 +2,23 @@
 import React from 'react';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
-import { Menu } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, LogOut, LogIn } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 interface HeaderProps {
   onToggleSidebar: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
+
   return (
     <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -23,25 +33,39 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
             <span className="sr-only">Toggle menu</span>
           </Button>
           
-          <div className="flex items-center">
+          <Link to="/" className="flex items-center">
             <h1 className="text-2xl font-bold bengali-heading">
               সংক্ষেপ
             </h1>
             <span className="ml-2 text-sm bg-bengali-cream dark:bg-bengali-green/20 px-2 py-0.5 rounded text-bengali-red">
               বেটা
             </span>
-          </div>
+          </Link>
         </div>
         
         <div className="flex items-center gap-2">
           <ThemeToggle />
           
-          <Button 
-            variant="outline" 
-            className="hidden md:inline-flex"
-          >
-            সাইন ইন
-          </Button>
+          {user ? (
+            <Button 
+              variant="outline" 
+              className="flex items-center gap-2"
+              onClick={handleSignOut}
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="hidden md:inline">সাইন আউট</span>
+            </Button>
+          ) : (
+            <Link to="/login">
+              <Button 
+                variant="outline" 
+                className="flex items-center gap-2"
+              >
+                <LogIn className="h-4 w-4" />
+                <span className="hidden md:inline">সাইন ইন</span>
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </header>
