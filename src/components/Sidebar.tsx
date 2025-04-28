@@ -9,6 +9,7 @@ interface HistoryItem {
   text: string;
   summary: string;
   timestamp: Date;
+  user_id: string; // Added user_id property to match the Dashboard.tsx interface
 }
 
 interface SidebarProps {
