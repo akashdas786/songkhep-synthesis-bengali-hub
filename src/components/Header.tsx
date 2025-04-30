@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, LogOut, LogIn } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { LanguageToggle } from '@/components/LanguageToggle';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -12,6 +14,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   const { user, signOut } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -35,15 +38,16 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           
           <Link to="/" className="flex items-center">
             <h1 className="text-2xl font-bold bengali-heading">
-              সংক্ষেপ
+              {t('app.name')}
             </h1>
             <span className="ml-2 text-sm bg-bengali-cream dark:bg-bengali-green/20 px-2 py-0.5 rounded text-bengali-red">
-              বেটা
+              {t('app.beta')}
             </span>
           </Link>
         </div>
         
         <div className="flex items-center gap-2">
+          <LanguageToggle />
           <ThemeToggle />
           
           {user ? (
@@ -53,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
               onClick={handleSignOut}
             >
               <LogOut className="h-4 w-4" />
-              <span className="hidden md:inline">সাইন আউট</span>
+              <span className="hidden md:inline">{t('app.signOut')}</span>
             </Button>
           ) : (
             <Link to="/login">
@@ -62,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
                 className="flex items-center gap-2"
               >
                 <LogIn className="h-4 w-4" />
-                <span className="hidden md:inline">সাইন ইন</span>
+                <span className="hidden md:inline">{t('app.signIn')}</span>
               </Button>
             </Link>
           )}

@@ -6,12 +6,56 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
+  const { t, language } = useLanguage();
+  
+  // Translations for this component
+  const texts = {
+    en: {
+      title: 'Reset Password',
+      emailLabel: 'Email',
+      emailPlaceholder: 'Your email',
+      submitButton: 'Send Reset Link',
+      loading: 'Sending...',
+      returnToLogin: 'Return to Sign In',
+      successTitle: 'Password Reset Link Sent',
+      successDescription: 'Please check your email',
+      successMessage: 'Password reset link has been sent. Please check your email.',
+      tryAgainButton: 'Try Again',
+      toastSuccessTitle: 'Password Reset Link Sent',
+      toastSuccessDescription: 'Check your email',
+      toastErrorTitle: 'Password Reset Failed',
+      toastErrorDescription: 'Please try again',
+      preSubmitInstructions: 'Enter your email to reset your password',
+      postSubmitInstructions: 'Check your email for the password reset link'
+    },
+    bn: {
+      title: 'পাসওয়ার্ড রিসেট',
+      emailLabel: 'ইমেইল',
+      emailPlaceholder: 'আপনার ইমেইল',
+      submitButton: 'রিসেট লিংক পাঠান',
+      loading: 'পাঠানো হচ্ছে...',
+      returnToLogin: 'সাইন ইন পেজে ফিরে যান',
+      successTitle: 'পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে',
+      successDescription: 'আপনার ইমেইল চেক করুন',
+      successMessage: 'পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে। অনুগ্রহ করে আপনার ইমেইল চেক করুন।',
+      tryAgainButton: 'আবার চেষ্টা করুন',
+      toastSuccessTitle: 'পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে',
+      toastSuccessDescription: 'আপনার ইমেইল চেক করুন',
+      toastErrorTitle: 'পাসওয়ার্ড রিসেট ব্যর্থ',
+      toastErrorDescription: 'দয়া করে আবার চেষ্টা করুন',
+      preSubmitInstructions: 'পাসওয়ার্ড রিসেট করতে আপনার ইমেইল দিন',
+      postSubmitInstructions: 'আপনার ইমেইল চেক করুন পাসওয়ার্ড রিসেট লিংকের জন্য'
+    }
+  };
+  
+  const currentTexts = language === 'en' ? texts.en : texts.bn;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,14 +72,14 @@ export const ForgotPassword: React.FC = () => {
       
       setSubmitted(true);
       toast({
-        title: "পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে",
-        description: "আপনার ইমেইল চেক করুন",
+        title: currentTexts.toastSuccessTitle,
+        description: currentTexts.toastSuccessDescription,
       });
     } catch (error) {
       console.error("Error:", error);
       toast({
-        title: "পাসওয়ার্ড রিসেট ব্যর্থ",
-        description: "দয়া করে আবার চেষ্টা করুন",
+        title: currentTexts.toastErrorTitle,
+        description: currentTexts.toastErrorDescription,
         variant: "destructive",
       });
     } finally {
@@ -59,13 +103,13 @@ export const ForgotPassword: React.FC = () => {
               transition={{ duration: 0.3 }}
               className="text-3xl font-bold bengali-heading"
             >
-              সংক্ষেপ
+              {t('app.name')}
             </motion.h1>
           </Link>
           <p className="mt-2 text-gray-600 dark:text-gray-300">
             {submitted 
-              ? "আপনার ইমেইল চেক করুন পাসওয়ার্ড রিসেট লিংকের জন্য"
-              : "পাসওয়ার্ড রিসেট করতে আপনার ইমেইল দিন"
+              ? currentTexts.postSubmitInstructions
+              : currentTexts.preSubmitInstructions
             }
           </p>
         </div>
@@ -74,14 +118,14 @@ export const ForgotPassword: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium mb-1">
-                ইমেইল
+                {currentTexts.emailLabel}
               </label>
               <Input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="আপনার ইমেইল"
+                placeholder={currentTexts.emailPlaceholder}
                 required
                 disabled={loading}
                 className="w-full glass-input"
@@ -93,12 +137,12 @@ export const ForgotPassword: React.FC = () => {
               className="w-full" 
               disabled={loading}
             >
-              {loading ? "পাঠানো হচ্ছে..." : "রিসেট লিংক পাঠান"}
+              {loading ? currentTexts.loading : currentTexts.submitButton}
             </Button>
 
             <div className="mt-4 text-center">
               <Link to="/login" className="text-bengali-red hover:underline">
-                সাইন ইন পেজে ফিরে যান
+                {currentTexts.returnToLogin}
               </Link>
             </div>
           </form>
@@ -116,18 +160,18 @@ export const ForgotPassword: React.FC = () => {
               </div>
             </div>
             <p className="text-gray-700 dark:text-gray-300">
-              পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে। অনুগ্রহ করে আপনার ইমেইল চেক করুন।
+              {currentTexts.successMessage}
             </p>
             <Button
               variant="outline"
               onClick={() => setSubmitted(false)}
               className="mt-4"
             >
-              আবার চেষ্টা করুন
+              {currentTexts.tryAgainButton}
             </Button>
             <div className="mt-4">
               <Link to="/login" className="text-bengali-red hover:underline">
-                সাইন ইন পেজে ফিরে যান
+                {currentTexts.returnToLogin}
               </Link>
             </div>
           </motion.div>
