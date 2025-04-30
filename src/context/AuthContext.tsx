@@ -86,10 +86,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  // Fix the resetPassword function to match the interface
   const resetPassword = async (email: string) => {
-    return supabase.auth.resetPasswordForEmail(email, {
+    const response = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
+    
+    // Transform the response to match the expected return type
+    return {
+      error: response.error,
+      data: { 
+        user: null, 
+        session: null 
+      }
+    };
   };
 
   return (
