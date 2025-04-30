@@ -8,7 +8,7 @@ import { EmptyState } from '@/components/EmptyState';
 import { summarizeText } from '@/utils/summarize';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/context/AuthContext';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { v4 as uuidv4 } from 'uuid';
 
 interface HistoryItem {
