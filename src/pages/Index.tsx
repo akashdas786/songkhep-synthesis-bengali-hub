@@ -9,13 +9,14 @@ import { ThemeProvider } from '@/context/ThemeContext';
 import { summarizeText } from '@/utils/summarize';
 import { useToast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface HistoryItem {
   id: string;
   text: string;
   summary: string;
   timestamp: Date;
-  user_id: string; // Added the user_id property to match Dashboard.tsx
+  user_id: string;
 }
 
 const Index: React.FC = () => {
@@ -36,7 +37,7 @@ const Index: React.FC = () => {
         text,
         summary,
         timestamp: new Date(),
-        user_id: 'guest', // We'll use 'guest' for non-authenticated users
+        user_id: 'guest',
       };
       
       setHistory(prev => [newItem, ...prev]);
@@ -67,14 +68,6 @@ const Index: React.FC = () => {
         <Header onToggleSidebar={toggleSidebar} />
         
         <div className="relative">
-          {/* Mobile sidebar backdrop */}
-          {sidebarOpen && (
-            <div 
-              className="fixed inset-0 bg-black/20 z-10 lg:hidden"
-              onClick={toggleSidebar}
-            />
-          )}
-          
           <Sidebar 
             history={history} 
             activeId={activeItem?.id || null}
@@ -83,7 +76,12 @@ const Index: React.FC = () => {
             onToggle={toggleSidebar}
           />
           
-          <div className="lg:pl-72 p-4 md:p-8">
+          <motion.div 
+            className="lg:pl-72 p-4 md:p-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <main className="container mx-auto max-w-4xl">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
@@ -94,18 +92,36 @@ const Index: React.FC = () => {
                 </div>
                 
                 <div>
-                  {activeItem ? (
-                    <Summary
-                      summary={activeItem.summary}
-                      originalText={activeItem.text}
-                    />
-                  ) : (
-                    <EmptyState />
-                  )}
+                  <AnimatePresence mode="wait">
+                    {activeItem ? (
+                      <motion.div
+                        key="summary"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <Summary
+                          summary={activeItem.summary}
+                          originalText={activeItem.text}
+                        />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="empty"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <EmptyState />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
             </main>
-          </div>
+          </motion.div>
         </div>
       </div>
     </ThemeProvider>

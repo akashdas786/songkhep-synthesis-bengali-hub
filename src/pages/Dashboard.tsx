@@ -11,6 +11,7 @@ import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { v4 as uuidv4 } from 'uuid';
 import type { Database } from '@/integrations/supabase/types';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface HistoryItem {
   id: string;
@@ -129,16 +130,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background bengali-pattern">
-      <Header onToggleSidebar={toggleSidebar} />
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Header onToggleSidebar={toggleSidebar} />
+      </motion.div>
       
       <div className="relative">
-        {sidebarOpen && (
-          <div 
-            className="fixed inset-0 bg-black/20 z-10 lg:hidden"
-            onClick={toggleSidebar}
-          />
-        )}
-        
         <Sidebar 
           history={history} 
           activeId={activeItem?.id || null}
@@ -147,7 +147,12 @@ const Dashboard: React.FC = () => {
           onToggle={toggleSidebar}
         />
         
-        <div className="lg:pl-72 p-4 md:p-8">
+        <motion.div 
+          className="lg:pl-72 p-4 md:p-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <main className="container mx-auto max-w-4xl">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -158,18 +163,36 @@ const Dashboard: React.FC = () => {
               </div>
               
               <div>
-                {activeItem ? (
-                  <Summary
-                    summary={activeItem.summary}
-                    originalText={activeItem.text}
-                  />
-                ) : (
-                  <EmptyState />
-                )}
+                <AnimatePresence mode="wait">
+                  {activeItem ? (
+                    <motion.div
+                      key="summary"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Summary
+                        summary={activeItem.summary}
+                        originalText={activeItem.text}
+                      />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="empty"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <EmptyState />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </main>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

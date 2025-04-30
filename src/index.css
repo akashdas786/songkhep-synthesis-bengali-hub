@@ -106,4 +106,24 @@
   .bengali-heading {
     @apply bg-gradient-to-r from-bengali-red to-bengali-gold text-transparent bg-clip-text;
   }
+  
+  .glass {
+    @apply backdrop-blur-md bg-white/30 dark:bg-gray-900/40 border border-white/20 dark:border-gray-800/30 shadow-lg;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border border-white/20 dark:border-gray-800/30 shadow-xl hover:shadow-2xl transition-all duration-300;
+  }
+  
+  .glass-input {
+    @apply backdrop-blur-md bg-white/50 dark:bg-gray-900/50 border border-white/20 dark:border-gray-800/30;
+  }
+}
+
+.animate-enter {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-exit {
+  animation: fade-out 0.5s ease-out forwards;
 }
