@@ -10,6 +10,8 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 // Pages
 import LandingPage from "./components/LandingPage";
 import { LoginForm, RegisterForm } from "./components/AuthForms";
+import { ForgotPassword } from "./components/ForgotPassword";
+import { ResetPassword } from "./components/ResetPassword";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
@@ -50,6 +52,8 @@ const AppRoutes = () => (
     <Route path="/" element={<LandingPage />} />
     <Route path="/login" element={<PublicRoute><LoginForm /></PublicRoute>} />
     <Route path="/register" element={<PublicRoute><RegisterForm /></PublicRoute>} />
+    <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
+    <Route path="/reset-password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
     <Route path="*" element={<NotFound />} />
   </Routes>

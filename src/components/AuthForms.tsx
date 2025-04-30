@@ -44,7 +44,7 @@ export const LoginForm: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-bengali-cream/30 dark:from-gray-900 dark:to-gray-800 p-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+      <div className="w-full max-w-md bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg p-8 glass-card">
         <div className="text-center mb-8">
           <Link to="/">
             <h1 className="text-3xl font-bold bengali-heading">সংক্ষেপ</h1>
@@ -65,7 +65,7 @@ export const LoginForm: React.FC = () => {
               placeholder="আপনার ইমেইল"
               required
               disabled={loading}
-              className="w-full"
+              className="w-full glass-input"
             />
           </div>
           
@@ -86,7 +86,7 @@ export const LoginForm: React.FC = () => {
               placeholder="আপনার পাসওয়ার্ড"
               required
               disabled={loading}
-              className="w-full"
+              className="w-full glass-input"
             />
           </div>
           

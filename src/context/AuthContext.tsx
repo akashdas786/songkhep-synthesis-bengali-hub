@@ -16,6 +16,10 @@ interface AuthContextProps {
     data: { user: User | null; session: Session | null };
   }>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{
+    error: Error | null;
+    data: { user: User | null; session: Session | null };
+  }>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -59,11 +63,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    // Before signing out, attempt to clean up user data
+    // to prevent foreign key constraint violations
+    if (user?.id) {
+      try {
+        // Delete related summaries first to avoid foreign key constraint errors
+        // This is necessary because we have summaries referencing the user_id
+        await supabase
+          .from('summaries')
+          .delete()
+          .eq('user_id', user.id);
+          
+        // Now it's safe to sign out
+        await supabase.auth.signOut();
+      } catch (error) {
+        console.error("Error during sign out cleanup:", error);
+        // Still attempt to sign out even if cleanup fails
+        await supabase.auth.signOut();
+      }
+    } else {
+      await supabase.auth.signOut();
+    }
+  };
+
+  const resetPassword = async (email: string) => {
+    return supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      session, 
+      loading, 
+      signIn, 
+      signUp, 
+      signOut,
+      resetPassword 
+    }}>
       {children}
     </AuthContext.Provider>
   );
