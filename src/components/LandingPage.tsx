@@ -2,24 +2,35 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/context/LanguageContext';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { LanguageToggle } from '@/components/LanguageToggle';
 
 export const LandingPage: React.FC = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-bengali-cream dark:from-gray-900 dark:to-gray-800">
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center">
-          <h1 className="text-3xl font-bold bengali-heading">সংক্ষেপ</h1>
+          <h1 className="text-3xl font-bold bengali-heading">
+            {t('app.name')}
+          </h1>
           <span className="ml-2 text-sm bg-bengali-cream dark:bg-bengali-green/20 px-2 py-0.5 rounded text-bengali-red">
-            বেটা
+            {t('app.beta')}
           </span>
         </div>
-        <div className="space-x-3">
-          <Link to="/login">
-            <Button variant="outline">সাইন ইন</Button>
-          </Link>
-          <Link to="/register">
-            <Button>রেজিস্ট্রেশন</Button>
-          </Link>
+        <div className="flex items-center gap-3">
+          <LanguageToggle />
+          <ThemeToggle />
+          <div className="space-x-3">
+            <Link to="/login">
+              <Button variant="outline">{t('app.signIn')}</Button>
+            </Link>
+            <Link to="/register">
+              <Button>{t('app.register')}</Button>
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -27,20 +38,20 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold mb-6 bengali-heading">
-              বাংলা টেক্সট সংক্ষিপ্ত করুন সহজেই
+              {t('landing.heading')}
             </h2>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
-              আমাদের এআই-চালিত টুল ব্যবহার করে যেকোনো বাংলা টেক্সট দ্রুত ও নির্ভুলভাবে সংক্ষিপ্ত করুন
+              {t('landing.subheading')}
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link to="/register">
                 <Button size="lg" className="px-8 py-6 text-lg">
-                  বিনামূল্যে শুরু করুন
+                  {t('landing.startFree')}
                 </Button>
               </Link>
               <Link to="/login">
                 <Button size="lg" variant="outline" className="px-8 py-6 text-lg">
-                  সাইন ইন করুন
+                  {t('landing.signIn')}
                 </Button>
               </Link>
             </div>
@@ -52,60 +63,60 @@ export const LandingPage: React.FC = () => {
               <div className="h-12 w-12 bg-bengali-red/10 rounded-full flex items-center justify-center mb-4">
                 <span className="text-2xl">⚡</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">দ্রুত সংক্ষিপ্তকরণ</h3>
+              <h3 className="text-xl font-bold mb-2">{t('landing.feature1.title')}</h3>
               <p className="text-gray-600 dark:text-gray-300">
-                সেকেন্ডের মধ্যে আপনার দীর্ঘ টেক্সট সংক্ষিপ্ত করুন, সময় বাঁচান
+                {t('landing.feature1.description')}
               </p>
             </div>
             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
               <div className="h-12 w-12 bg-bengali-gold/10 rounded-full flex items-center justify-center mb-4">
                 <span className="text-2xl">🔍</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">সঠিক সংক্ষিপ্তকরণ</h3>
+              <h3 className="text-xl font-bold mb-2">{t('landing.feature2.title')}</h3>
               <p className="text-gray-600 dark:text-gray-300">
-                কৃত্রিম বুদ্ধিমত্তা দিয়ে সবচেয়ে গুরুত্বপূর্ণ বিষয়বস্তু বজায় রাখুন
+                {t('landing.feature2.description')}
               </p>
             </div>
             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
               <div className="h-12 w-12 bg-bengali-green/10 rounded-full flex items-center justify-center mb-4">
                 <span className="text-2xl">📱</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">সকল ডিভাইসে</h3>
+              <h3 className="text-xl font-bold mb-2">{t('landing.feature3.title')}</h3>
               <p className="text-gray-600 dark:text-gray-300">
-                যেকোনো ডিভাইস থেকে ব্যবহার করুন, সর্বদা আপনার সাথে থাকুন
+                {t('landing.feature3.description')}
               </p>
             </div>
           </div>
 
           {/* How it works */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-8">কিভাবে কাজ করে</h2>
+            <h2 className="text-3xl font-bold mb-8">{t('landing.howItWorks')}</h2>
             <div className="flex flex-col md:flex-row gap-8 justify-between">
               <div className="flex-1 flex flex-col items-center">
                 <div className="bg-bengali-cream dark:bg-bengali-green/20 h-16 w-16 rounded-full flex items-center justify-center mb-4 text-2xl">
                   1
                 </div>
-                <h3 className="text-xl font-bold mb-2">টেক্সট পেস্ট করুন</h3>
+                <h3 className="text-xl font-bold mb-2">{t('landing.step1.title')}</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  আপনার সংক্ষিপ্ত করতে চাওয়া টেক্সট পেস্ট করুন
+                  {t('landing.step1.description')}
                 </p>
               </div>
               <div className="flex-1 flex flex-col items-center">
                 <div className="bg-bengali-cream dark:bg-bengali-green/20 h-16 w-16 rounded-full flex items-center justify-center mb-4 text-2xl">
                   2
                 </div>
-                <h3 className="text-xl font-bold mb-2">সংক্ষিপ্ত করুন</h3>
+                <h3 className="text-xl font-bold mb-2">{t('landing.step2.title')}</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  বাটন ক্লিক করে সংক্ষিপ্তকরণ শুরু করুন
+                  {t('landing.step2.description')}
                 </p>
               </div>
               <div className="flex-1 flex flex-col items-center">
                 <div className="bg-bengali-cream dark:bg-bengali-green/20 h-16 w-16 rounded-full flex items-center justify-center mb-4 text-2xl">
                   3
                 </div>
-                <h3 className="text-xl font-bold mb-2">ফলাফল পান</h3>
+                <h3 className="text-xl font-bold mb-2">{t('landing.step3.title')}</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  সংক্ষিপ্ত টেক্সট কপি করুন বা সেভ করুন
+                  {t('landing.step3.description')}
                 </p>
               </div>
             </div>
@@ -117,18 +128,18 @@ export const LandingPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
-              <h2 className="text-2xl font-bold bengali-heading">সংক্ষেপ</h2>
-              <p className="text-gray-600 dark:text-gray-300">© 2025 সংক্ষেপ। সর্বস্বত্ব সংরক্ষিত।</p>
+              <h2 className="text-2xl font-bold bengali-heading">{t('app.name')}</h2>
+              <p className="text-gray-600 dark:text-gray-300">{t('landing.copyright')}</p>
             </div>
             <div className="flex space-x-6">
               <Link to="/about" className="text-gray-600 dark:text-gray-300 hover:text-bengali-red">
-                আমাদের সম্পর্কে
+                {t('landing.about')}
               </Link>
               <Link to="/contact" className="text-gray-600 dark:text-gray-300 hover:text-bengali-red">
-                যোগাযোগ
+                {t('landing.contact')}
               </Link>
               <Link to="/privacy" className="text-gray-600 dark:text-gray-300 hover:text-bengali-red">
-                গোপনীয়তা নীতি
+                {t('landing.privacy')}
               </Link>
             </div>
           </div>
