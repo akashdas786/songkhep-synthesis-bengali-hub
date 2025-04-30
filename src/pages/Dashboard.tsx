@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput } from '@/components/TextInput';
 import { Summary } from '@/components/Summary';
 import { Sidebar } from '@/components/Sidebar';
@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { v4 as uuidv4 } from 'uuid';
+import type { Database } from '@/integrations/supabase/types';
 
 interface HistoryItem {
   id: string;
@@ -27,6 +28,47 @@ const Dashboard: React.FC = () => {
   const { toast } = useToast();
   const { user } = useAuth();
 
+  // Load existing summaries when component mounts and user is authenticated
+  useEffect(() => {
+    const loadSummaries = async () => {
+      if (!user) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('summaries')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+          
+        if (error) {
+          console.error('Error loading summaries:', error);
+          return;
+        }
+        
+        if (data) {
+          const formattedData = data.map(item => ({
+            id: item.id,
+            text: item.text,
+            summary: item.summary,
+            timestamp: new Date(item.created_at),
+            user_id: item.user_id
+          }));
+          
+          setHistory(formattedData);
+          
+          // Set active item to the most recent summary if available
+          if (formattedData.length > 0) {
+            setActiveItem(formattedData[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load summaries:', error);
+      }
+    };
+    
+    loadSummaries();
+  }, [user]);
+
   const handleSubmit = async (text: string) => {
     setIsProcessing(true);
     
@@ -43,15 +85,23 @@ const Dashboard: React.FC = () => {
       
       // Save summary to Supabase if user is authenticated
       if (user) {
-        const { error } = await supabase.from('summaries').insert({
-          id: newItem.id,
-          text: newItem.text,
-          summary: newItem.summary,
-          user_id: user.id,
-        });
+        const { error } = await supabase
+          .from('summaries')
+          .insert({
+            id: newItem.id,
+            text: newItem.text,
+            summary: newItem.summary,
+            user_id: user.id,
+          });
         
         if (error) {
           console.error('Error saving summary:', error);
+          toast({
+            title: "সংরক্ষণে সমস্যা",
+            description: "সারাংশ সংরক্ষণ করতে সমস্যা হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।",
+            variant: "destructive",
+          });
+          return;
         }
       }
       
