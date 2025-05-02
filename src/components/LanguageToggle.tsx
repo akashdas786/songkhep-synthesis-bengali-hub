@@ -28,7 +28,7 @@ export const LanguageToggle: React.FC = () => {
           >
             {language.toUpperCase()}
           </motion.span>
-          <span className="sr-only">Toggle language</span>
+          <span className="sr-only">{t('language.toggle')}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">

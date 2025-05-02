@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/context/LanguageContext';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +14,7 @@ export const LoginForm: React.FC = () => {
   const { signIn } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,15 +28,15 @@ export const LoginForm: React.FC = () => {
       }
       
       toast({
-        title: "সাইন ইন সফল",
-        description: "আপনি সফলভাবে সাইন ইন করেছেন",
+        title: t('auth.signIn.success.title'),
+        description: t('auth.signIn.success.description'),
       });
       
       navigate('/dashboard');
     } catch (error) {
       toast({
-        title: "সাইন ইন ব্যর্থ",
-        description: "দয়া করে আবার চেষ্টা করুন",
+        title: t('auth.signIn.error.title'),
+        description: t('auth.signIn.error.description'),
         variant: "destructive",
       });
     } finally {
@@ -47,22 +49,22 @@ export const LoginForm: React.FC = () => {
       <div className="w-full max-w-md bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl shadow-lg p-8 glass-card">
         <div className="text-center mb-8">
           <Link to="/">
-            <h1 className="text-3xl font-bold bengali-heading">সংক্ষেপ</h1>
+            <h1 className="text-3xl font-bold bengali-heading">{t('app.name')}</h1>
           </Link>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">আপনার অ্যাকাউন্টে সাইন ইন করুন</p>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">{t('auth.signIn.heading')}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
-              ইমেইল
+              {t('auth.email')}
             </label>
             <Input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="আপনার ইমেইল"
+              placeholder={t('auth.emailPlaceholder')}
               required
               disabled={loading}
               className="w-full glass-input"
@@ -72,10 +74,10 @@ export const LoginForm: React.FC = () => {
           <div>
             <div className="flex justify-between items-center mb-1">
               <label htmlFor="password" className="block text-sm font-medium">
-                পাসওয়ার্ড
+                {t('auth.password')}
               </label>
               <Link to="/forgot-password" className="text-sm text-bengali-red hover:underline">
-                পাসওয়ার্ড ভুলে গেছেন?
+                {t('auth.forgotPassword')}
               </Link>
             </div>
             <Input
@@ -83,7 +85,7 @@ export const LoginForm: React.FC = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="আপনার পাসওয়ার্ড"
+              placeholder={t('auth.passwordPlaceholder')}
               required
               disabled={loading}
               className="w-full glass-input"
@@ -91,15 +93,15 @@ export const LoginForm: React.FC = () => {
           </div>
           
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "লোড হচ্ছে..." : "সাইন ইন করুন"}
+            {loading ? t('common.loading') : t('auth.signIn.button')}
           </Button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-gray-600 dark:text-gray-300">
-            অ্যাকাউন্ট নেই?{" "}
+            {t('auth.noAccount')}{" "}
             <Link to="/register" className="text-bengali-red hover:underline">
-              রেজিস্ট্রেশন করুন
+              {t('auth.register.link')}
             </Link>
           </p>
         </div>
@@ -115,6 +117,7 @@ export const RegisterForm: React.FC = () => {
   const { signUp } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,15 +131,15 @@ export const RegisterForm: React.FC = () => {
       }
       
       toast({
-        title: "রেজিস্ট্রেশন সফল",
-        description: "দয়া করে আপনার ইমেইল চেক করুন",
+        title: t('auth.register.success.title'),
+        description: t('auth.register.success.description'),
       });
       
       navigate('/login');
     } catch (error) {
       toast({
-        title: "রেজিস্ট্রেশন ব্যর্থ",
-        description: "দয়া করে আবার চেষ্টা করুন",
+        title: t('auth.register.error.title'),
+        description: t('auth.register.error.description'),
         variant: "destructive",
       });
     } finally {
@@ -149,22 +152,22 @@ export const RegisterForm: React.FC = () => {
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
         <div className="text-center mb-8">
           <Link to="/">
-            <h1 className="text-3xl font-bold bengali-heading">সংক্ষেপ</h1>
+            <h1 className="text-3xl font-bold bengali-heading">{t('app.name')}</h1>
           </Link>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">নতুন অ্যাকাউন্ট তৈরি করুন</p>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">{t('auth.register.heading')}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
-              ইমেইল
+              {t('auth.email')}
             </label>
             <Input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="আপনার ইমেইল"
+              placeholder={t('auth.emailPlaceholder')}
               required
               disabled={loading}
               className="w-full"
@@ -173,14 +176,14 @@ export const RegisterForm: React.FC = () => {
           
           <div>
             <label htmlFor="password" className="block text-sm font-medium mb-1">
-              পাসওয়ার্ড
+              {t('auth.password')}
             </label>
             <Input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="পাসওয়ার্ড তৈরি করুন"
+              placeholder={t('auth.passwordCreatePlaceholder')}
               required
               disabled={loading}
               className="w-full"
@@ -188,15 +191,15 @@ export const RegisterForm: React.FC = () => {
           </div>
           
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "লোড হচ্ছে..." : "অ্যাকাউন্ট তৈরি করুন"}
+            {loading ? t('common.loading') : t('auth.register.button')}
           </Button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-gray-600 dark:text-gray-300">
-            ইতিমধ্যে অ্যাকাউন্ট আছে?{" "}
+            {t('auth.hasAccount')}{" "}
             <Link to="/login" className="text-bengali-red hover:underline">
-              সাইন ইন করুন
+              {t('auth.signIn.link')}
             </Link>
           </p>
         </div>
