@@ -118,6 +118,18 @@
   .glass-input {
     @apply backdrop-blur-md bg-white/50 dark:bg-gray-900/50 border border-white/20 dark:border-gray-800/30;
   }
+  
+  .glass-nav {
+    @apply backdrop-blur-lg bg-white/70 dark:bg-gray-900/70 border-b border-white/10 dark:border-gray-800/30 shadow-sm;
+  }
+  
+  .glass-button {
+    @apply backdrop-blur-md bg-white/30 dark:bg-gray-800/30 hover:bg-white/50 dark:hover:bg-gray-700/50 border border-white/20 dark:border-gray-700/30 transition-all duration-300;
+  }
+  
+  .glass-dropdown {
+    @apply backdrop-blur-md bg-white/90 dark:bg-gray-800/90 border border-white/20 dark:border-gray-700/30 shadow-xl;
+  }
 }
 
 .animate-enter {
@@ -126,4 +138,20 @@
 
 .animate-exit {
   animation: fade-out 0.5s ease-out forwards;
+}
+
+/* Add glass morphism animation effects */
+@keyframes pulse-glass {
+  0%, 100% { 
+    backdrop-filter: blur(10px);
+    background-opacity: 0.7;
+  }
+  50% { 
+    backdrop-filter: blur(12px);
+    background-opacity: 0.8;
+  }
+}
+
+.pulse-glass {
+  animation: pulse-glass 8s infinite ease-in-out;
 }
