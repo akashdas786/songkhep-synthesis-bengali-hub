@@ -30,6 +30,14 @@ const translations: Translations = {
     en: 'Register',
     bn: 'নিবন্ধন'
   },
+  'nav.dashboard': {
+    en: 'Dashboard',
+    bn: 'ড্যাশবোর্ড'
+  },
+  'nav.features': {
+    en: 'Features',
+    bn: 'বৈশিষ্ট্য'
+  },
   'sidebar.history': {
     en: 'Your History',
     bn: 'আপনার ইতিহাস'
