@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface HistoryItem {
   id: string;
@@ -17,6 +18,7 @@ interface HistoryItem {
   summary: string;
   timestamp: Date;
   user_id: string;
+  level: number;
 }
 
 const Dashboard: React.FC = () => {
@@ -26,12 +28,13 @@ const Dashboard: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { t } = useLanguage();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
-  const handleSubmit = async (text: string) => {
+  const handleSubmit = async (text: string, level: number) => {
     setIsProcessing(true);
     
     try {
-      const summary = await summarizeText(text);
+      const summary = await summarizeText(text, level);
       
       const newItem: HistoryItem = {
         id: uuidv4(),
@@ -39,6 +42,7 @@ const Dashboard: React.FC = () => {
         summary,
         timestamp: new Date(),
         user_id: 'guest',
+        level,
       };
       
       setHistory(prev => [newItem, ...prev]);
@@ -48,6 +52,11 @@ const Dashboard: React.FC = () => {
         title: t('toast.success.title'),
         description: t('toast.success.description'),
       });
+
+      // Auto-open sidebar on mobile when first item is created
+      if (isMobile && history.length === 0) {
+        setSidebarOpen(true);
+      }
     } catch (error) {
       toast({
         title: t('toast.error.title'),
@@ -67,7 +76,7 @@ const Dashboard: React.FC = () => {
     <div className="min-h-screen bg-background bengali-pattern">
       <Header onToggleSidebar={toggleSidebar} />
       
-      <div className="relative">
+      <div className="relative flex">
         <Sidebar 
           history={history} 
           activeId={activeItem?.id || null}
@@ -77,21 +86,21 @@ const Dashboard: React.FC = () => {
         />
         
         <motion.div 
-          className="lg:pl-72 p-4 md:p-8"
+          className="flex-grow p-4 md:p-8 md:pl-4 lg:pl-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <main className="container mx-auto max-w-4xl">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
+          <main className="container mx-auto max-w-6xl">
+            <div className="grid md:grid-cols-2 gap-6 h-full">
+              <div className="h-full">
                 <TextInput 
                   onSubmit={handleSubmit} 
                   isProcessing={isProcessing} 
                 />
               </div>
               
-              <div>
+              <div className="h-full">
                 <AnimatePresence mode="wait">
                   {activeItem ? (
                     <motion.div
@@ -100,6 +109,7 @@ const Dashboard: React.FC = () => {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
+                      className="h-full"
                     >
                       <Summary
                         summary={activeItem.summary}
@@ -113,6 +123,7 @@ const Dashboard: React.FC = () => {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
+                      className="h-full"
                     >
                       <EmptyState />
                     </motion.div>

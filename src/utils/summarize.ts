@@ -1,6 +1,6 @@
 
 // This is a placeholder for a real summarization API
-export const summarizeText = async (text: string): Promise<string> => {
+export const summarizeText = async (text: string, level: number = 3): Promise<string> => {
   // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 1500));
   
@@ -12,10 +12,14 @@ export const summarizeText = async (text: string): Promise<string> => {
     return text;
   }
   
-  // Return the first sentence and approximately 30% of the remaining sentences
+  // Return the first sentence and approximately (30% / level) of the remaining sentences
+  // Higher level means more summarization (fewer sentences)
   const firstSentence = sentences[0];
   const remainingSentences = sentences.slice(1);
-  const samplesToTake = Math.max(1, Math.floor(remainingSentences.length * 0.3));
+  
+  // Calculate how many sentences to take based on summarization level
+  const compressionFactor = 0.3 / (level / 3);
+  const samplesToTake = Math.max(1, Math.floor(remainingSentences.length * compressionFactor));
   
   const selectedSentences = [
     firstSentence,
