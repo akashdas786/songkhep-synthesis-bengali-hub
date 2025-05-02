@@ -5,7 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
-import { history } from 'lucide-react';
+import { Clock } from 'lucide-react';
 
 interface HistoryItem {
   id: string;
@@ -48,7 +48,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           >
             <div className="flex items-center justify-between p-4 border-b border-sidebar-border/50 backdrop-blur-sm">
               <h2 className="text-lg font-medium text-sidebar-foreground bengali-heading flex items-center gap-2">
-                <history className="h-5 w-5" />
+                <Clock className="h-5 w-5" />
                 {t('sidebar.history')}
               </h2>
               <Button
@@ -130,7 +130,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        <history className="h-5 w-5" />
+        <Clock className="h-5 w-5" />
       </motion.button>
     </>
   );

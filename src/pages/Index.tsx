@@ -72,6 +72,11 @@ const Index: React.FC = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  // Create a handler function that correctly handles the type
+  const handleSelectItem = (item: HistoryItem) => {
+    setActiveItem(item);
+  };
+
   return (
     <div className="min-h-screen bg-background bengali-pattern">
       <Header onToggleSidebar={toggleSidebar} />
@@ -80,7 +85,7 @@ const Index: React.FC = () => {
         <Sidebar 
           history={history} 
           activeId={activeItem?.id || null}
-          onSelectItem={setActiveItem}
+          onSelectItem={handleSelectItem}
           isOpen={sidebarOpen}
           onToggle={toggleSidebar}
         />
