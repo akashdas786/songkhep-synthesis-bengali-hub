@@ -10,6 +10,26 @@ interface Translations {
 }
 
 const translations: Translations = {
+  'app.name': {
+    en: 'BengaliSum',
+    bn: 'বাংলা সারসংক্ষেপ'
+  },
+  'app.beta': {
+    en: 'BETA',
+    bn: 'বেটা'
+  },
+  'app.signIn': {
+    en: 'Sign In',
+    bn: 'সাইন ইন'
+  },
+  'app.signOut': {
+    en: 'Sign Out',
+    bn: 'সাইন আউট'
+  },
+  'app.register': {
+    en: 'Register',
+    bn: 'নিবন্ধন'
+  },
   'sidebar.history': {
     en: 'Your History',
     bn: 'আপনার ইতিহাস'
@@ -78,6 +98,194 @@ const translations: Translations = {
     en: 'Original text copied to clipboard',
     bn: 'মূল টেক্সট ক্লিপবোর্ডে কপি করা হয়েছে'
   },
+  'landing.heading': {
+    en: 'Summarize Bengali Text with AI',
+    bn: 'এআই দিয়ে বাংলা টেক্সট সংক্ষিপ্ত করুন'
+  },
+  'landing.subheading': {
+    en: 'Get quick, accurate summaries of Bengali content in seconds',
+    bn: 'সেকেন্ডে বাংলা কন্টেন্টের দ্রুত, সঠিক সারাংশ পান'
+  },
+  'landing.startFree': {
+    en: 'Start for Free',
+    bn: 'ফ্রিতে শুরু করুন'
+  },
+  'landing.signIn': {
+    en: 'Sign In',
+    bn: 'সাইন ইন'
+  },
+  'landing.feature1.title': {
+    en: 'Fast Summarization',
+    bn: 'দ্রুত সংক্ষিপ্তকরণ'
+  },
+  'landing.feature1.description': {
+    en: 'Get summaries in seconds, not minutes',
+    bn: 'মিনিট নয়, সেকেন্ডে সারাংশ পান'
+  },
+  'landing.feature2.title': {
+    en: 'Accurate Results',
+    bn: 'সঠিক ফলাফল'
+  },
+  'landing.feature2.description': {
+    en: 'AI-powered summarization that preserves context and meaning',
+    bn: 'AI-পাওয়ারড সংক্ষিপ্তকরণ যা প্রসঙ্গ এবং অর্থ বজায় রাখে'
+  },
+  'landing.feature3.title': {
+    en: 'Mobile Friendly',
+    bn: 'মোবাইল বান্ধব'
+  },
+  'landing.feature3.description': {
+    en: 'Summarize on any device, anywhere',
+    bn: 'যেকোনো ডিভাইসে, যেকোনো জায়গায় সংক্ষিপ্ত করুন'
+  },
+  'landing.howItWorks': {
+    en: 'How It Works',
+    bn: 'এটা কিভাবে কাজ করে'
+  },
+  'landing.step1.title': {
+    en: 'Paste Your Text',
+    bn: 'আপনার টেক্সট পেস্ট করুন'
+  },
+  'landing.step1.description': {
+    en: 'Input any Bengali text you want to summarize',
+    bn: 'আপনি যে বাংলা টেক্সট সংক্ষিপ্ত করতে চান তা ইনপুট করুন'
+  },
+  'landing.step2.title': {
+    en: 'Choose Length',
+    bn: 'দৈর্ঘ্য বাছাই করুন'
+  },
+  'landing.step2.description': {
+    en: 'Select how condensed you want the summary to be',
+    bn: 'আপনি সারাংশ কতটা সংক্ষিপ্ত চান তা নির্বাচন করুন'
+  },
+  'landing.step3.title': {
+    en: 'Get Summary',
+    bn: 'সারাংশ পান'
+  },
+  'landing.step3.description': {
+    en: 'Instantly receive your accurately summarized text',
+    bn: 'অবিলম্বে আপনার সঠিকভাবে সংক্ষিপ্ত টেক্সট পান'
+  },
+  'landing.copyright': {
+    en: '© 2025 BengaliSum. All rights reserved.',
+    bn: '© ২০২৫ বাংলা সারসংক্ষেপ। সর্বস্বত্ব সংরক্ষিত।'
+  },
+  'landing.about': {
+    en: 'About',
+    bn: 'সম্পর্কে'
+  },
+  'landing.contact': {
+    en: 'Contact',
+    bn: 'যোগাযোগ'
+  },
+  'landing.privacy': {
+    en: 'Privacy',
+    bn: 'গোপনীয়তা'
+  },
+  'language.toggle': {
+    en: 'Toggle language',
+    bn: 'ভাষা পরিবর্তন করুন'
+  },
+  'language.english': {
+    en: 'English',
+    bn: 'ইংরেজি'
+  },
+  'language.bengali': {
+    en: 'Bengali',
+    bn: 'বাংলা'
+  },
+  'auth.signIn.heading': {
+    en: 'Sign in to your account',
+    bn: 'আপনার অ্যাকাউন্টে সাইন ইন করুন'
+  },
+  'auth.register.heading': {
+    en: 'Create an account',
+    bn: 'একটি অ্যাকাউন্ট তৈরি করুন'
+  },
+  'auth.email': {
+    en: 'Email',
+    bn: 'ইমেইল'
+  },
+  'auth.emailPlaceholder': {
+    en: 'Enter your email',
+    bn: 'আপনার ইমেইল লিখুন'
+  },
+  'auth.password': {
+    en: 'Password',
+    bn: 'পাসওয়ার্ড'
+  },
+  'auth.passwordPlaceholder': {
+    en: 'Enter your password',
+    bn: 'আপনার পাসওয়ার্ড লিখুন'
+  },
+  'auth.passwordCreatePlaceholder': {
+    en: 'Create a password',
+    bn: 'একটি পাসওয়ার্ড তৈরি করুন'
+  },
+  'auth.forgotPassword': {
+    en: 'Forgot password?',
+    bn: 'পাসওয়ার্ড ভুলে গেছেন?'
+  },
+  'auth.noAccount': {
+    en: "Don't have an account?",
+    bn: 'অ্যাকাউন্ট নেই?'
+  },
+  'auth.hasAccount': {
+    en: 'Already have an account?',
+    bn: 'ইতিমধ্যে একটি অ্যাকাউন্ট আছে?'
+  },
+  'auth.register.button': {
+    en: 'Sign Up',
+    bn: 'সাইন আপ'
+  },
+  'auth.register.link': {
+    en: 'Sign Up',
+    bn: 'সাইন আপ'
+  },
+  'auth.signIn.button': {
+    en: 'Sign In',
+    bn: 'সাইন ইন'
+  },
+  'auth.signIn.link': {
+    en: 'Sign In',
+    bn: 'সাইন ইন'
+  },
+  'auth.signIn.success.title': {
+    en: 'Sign In Successful',
+    bn: 'সাইন ইন সফল'
+  },
+  'auth.signIn.success.description': {
+    en: 'You have successfully signed in!',
+    bn: 'আপনি সফলভাবে সাইন ইন করেছেন!'
+  },
+  'auth.signIn.error.title': {
+    en: 'Sign In Failed',
+    bn: 'সাইন ইন ব্যর্থ'
+  },
+  'auth.signIn.error.description': {
+    en: 'Failed to sign in. Please check your credentials and try again.',
+    bn: 'সাইন ইন করতে ব্যর্থ। আপনার তথ্য চেক করুন এবং আবার চেষ্টা করুন।'
+  },
+  'auth.register.success.title': {
+    en: 'Registration Successful',
+    bn: 'নিবন্ধন সফল'
+  },
+  'auth.register.success.description': {
+    en: 'Your account has been successfully created!',
+    bn: 'আপনার অ্যাকাউন্ট সফলভাবে তৈরি করা হয়েছে!'
+  },
+  'auth.register.error.title': {
+    en: 'Registration Failed',
+    bn: 'নিবন্ধন ব্যর্থ'
+  },
+  'auth.register.error.description': {
+    en: 'Failed to create your account. Please try again.',
+    bn: 'আপনার অ্যাকাউন্ট তৈরি করতে ব্যর্থ। আবার চেষ্টা করুন।'
+  },
+  'common.loading': {
+    en: 'Loading...',
+    bn: 'লোড হচ্ছে...'
+  }
 };
 
 interface LanguageContextType {
