@@ -95,13 +95,13 @@ const Profile: React.FC = () => {
       setAvatarUrl(newAvatarUrl);
       
       toast({
-        description: "Photo uploaded successfully",
+        description: t('profile.photo.uploaded') || "Photo uploaded successfully",
       });
     } catch (error) {
       console.error('Error uploading avatar:', error);
       toast({
         variant: "destructive",
-        description: "Error uploading photo",
+        description: t('profile.photo.error') || "Error uploading photo",
       });
     } finally {
       setUploadLoading(false);
@@ -172,6 +172,7 @@ const Profile: React.FC = () => {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2">{t('common.loading')}</span>
       </div>
     );
   }
@@ -182,7 +183,7 @@ const Profile: React.FC = () => {
         <CardHeader>
           <CardTitle>{t('profile.title')}</CardTitle>
           <CardDescription>
-            Update your profile information
+            {t('profile.description') || "Update your profile information"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -200,7 +201,7 @@ const Profile: React.FC = () => {
                   <div className="flex items-center gap-2 bg-secondary hover:bg-secondary/80 px-4 py-2 rounded-md">
                     <Upload className="h-4 w-4" />
                     <span>
-                      {uploadLoading ? "Uploading..." : t('profile.upload')}
+                      {uploadLoading ? t('profile.uploading') || "Uploading..." : t('profile.upload')}
                     </span>
                   </div>
                   <Input 

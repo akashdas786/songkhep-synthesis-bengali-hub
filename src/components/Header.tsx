@@ -34,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
           
           <Link to="/" className="flex items-center group">
             <h1 className="text-2xl font-bold bengali-heading group-hover:scale-105 transition-transform">
-              Sankkhep
+              {t('app.name')}
             </h1>
             <span className="ml-2 text-sm bg-bengali-cream/70 dark:bg-bengali-green/20 px-2 py-0.5 rounded text-bengali-red backdrop-blur-sm">
               {t('app.beta')}

@@ -37,14 +37,14 @@ export const LanguageToggle: React.FC = () => {
           className={`cursor-pointer ${language === 'en' ? 'bg-accent' : ''}`}
         >
           <span className="mr-2">🇺🇸</span>
-          {t('language.english')}
+          {language === 'en' ? t('language.english') : 'English'}
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => setLanguage('bn')}
           className={`cursor-pointer ${language === 'bn' ? 'bg-accent' : ''}`}
         >
           <span className="mr-2">🇧🇩</span>
-          {t('language.bengali')}
+          {language === 'bn' ? t('language.bengali') : 'বাংলা'}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

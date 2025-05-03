@@ -283,6 +283,18 @@ const translations: Translations = {
     en: '© 2023 BengaliBytes. All rights reserved.',
     bn: '© ২০২৩ বাংলা বাইটস। সর্বস্বত্ব সংরক্ষিত।'
   },
+  'language.toggle': {
+    en: 'Toggle language',
+    bn: 'ভাষা পরিবর্তন করুন'
+  },
+  'language.english': {
+    en: 'English',
+    bn: 'ইংরেজি'
+  },
+  'language.bengali': {
+    en: 'Bengali',
+    bn: 'বাংলা'
+  },
 };
 
 interface LanguageContextProps {
