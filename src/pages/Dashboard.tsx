@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput } from '@/components/TextInput';
 import { Summary } from '@/components/Summary';
 import { Sidebar } from '@/components/Sidebar';
@@ -11,6 +11,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 
 interface HistoryItem {
   id: string;
@@ -29,19 +31,79 @@ const Dashboard: React.FC = () => {
   const { t } = useLanguage();
   const { toast } = useToast();
   const isMobile = useIsMobile();
+  const { user } = useAuth();
+
+  // Load history from Supabase on component mount
+  useEffect(() => {
+    if (!user) return;
+
+    const loadHistory = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('summaries')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          // Convert data to HistoryItem format
+          const formattedHistory: HistoryItem[] = data.map(item => ({
+            id: item.id,
+            text: item.text,
+            summary: item.summary,
+            timestamp: new Date(item.created_at),
+            user_id: item.user_id,
+            level: 1, // default level if not stored
+          }));
+
+          setHistory(formattedHistory);
+          // Set the most recent item as active
+          setActiveItem(formattedHistory[0]);
+        }
+      } catch (error) {
+        console.error("Error loading history:", error);
+      }
+    };
+
+    loadHistory();
+  }, [user]);
 
   const handleSubmit = async (text: string, level: number) => {
+    if (!user) {
+      toast({
+        title: "Not logged in",
+        description: "Please login to save your summaries",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsProcessing(true);
     
     try {
       const summary = await summarizeText(text, level);
       
+      // Save to Supabase
+      const { data: savedItem, error } = await supabase
+        .from('summaries')
+        .insert({
+          text,
+          summary,
+          user_id: user.id,
+        })
+        .select()
+        .single();
+      
+      if (error) throw error;
+
       const newItem: HistoryItem = {
-        id: uuidv4(),
+        id: savedItem.id,
         text,
         summary,
-        timestamp: new Date(),
-        user_id: 'guest',
+        timestamp: new Date(savedItem.created_at),
+        user_id: user.id,
         level,
       };
       
@@ -58,6 +120,7 @@ const Dashboard: React.FC = () => {
         setSidebarOpen(true);
       }
     } catch (error) {
+      console.error("Error saving summary:", error);
       toast({
         title: t('toast.error.title'),
         description: t('toast.error.description'),

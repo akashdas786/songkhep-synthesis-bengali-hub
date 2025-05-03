@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 type Language = 'en' | 'bn';
 
@@ -11,8 +12,8 @@ type Translations = {
 
 const translations: Translations = {
   'app.name': {
-    en: 'BengaliBytes',
-    bn: 'বাংলা বাইটস'
+    en: 'Sankkhep',
+    bn: 'সংক্ষেপ'
   },
   'app.tagline': {
     en: 'Learn Bengali through technology',
@@ -21,6 +22,10 @@ const translations: Translations = {
   'nav.home': {
     en: 'Home',
     bn: 'হোম'
+  },
+  'nav.profile': {
+    en: 'Edit Profile',
+    bn: 'প্রোফাইল সম্পাদনা'
   },
   'app.signIn': {
     en: 'Sign In',
@@ -50,101 +55,57 @@ const translations: Translations = {
     en: 'Dashboard',
     bn: 'ড্যাশবোর্ড'
   },
-  'nav.features': {
-    en: 'Features',
-    bn: 'বৈশিষ্ট্য'
+  'profile.title': {
+    en: 'Edit Profile',
+    bn: 'প্রোফাইল সম্পাদনা'
   },
-  'sidebar.history': {
-    en: 'Your History',
-    bn: 'আপনার ইতিহাস'
+  'profile.name': {
+    en: 'Name',
+    bn: 'নাম'
   },
-  'landing.heading': {
-    en: 'Simplify Bengali Text with AI',
-    bn: 'এআই দিয়ে বাংলা টেক্সট সরলীকরণ করুন'
+  'profile.email': {
+    en: 'Email',
+    bn: 'ইমেল'
   },
-  'landing.subheading': {
-    en: 'Transform complex Bengali text into clear, concise summaries instantly',
-    bn: 'জটিল বাংলা টেক্সট তাৎক্ষণিকভাবে পরিষ্কার, সংক্ষিপ্ত সারাংশে রূপান্তর করুন'
+  'profile.photo': {
+    en: 'Profile Photo',
+    bn: 'প্রোফাইল ছবি'
   },
-  'landing.startFree': {
-    en: 'Start for Free',
-    bn: 'বিনামূল্যে শুরু করুন'
+  'profile.upload': {
+    en: 'Upload Photo',
+    bn: 'ছবি আপলোড করুন'
   },
-  'landing.signIn': {
-    en: 'Sign In',
-    bn: 'সাইন ইন'
+  'profile.save': {
+    en: 'Save Changes',
+    bn: 'পরিবর্তন সংরক্ষণ করুন'
   },
-  'landing.cta': {
-    en: 'Get Started',
-    bn: 'শুরু করুন'
+  'profile.success': {
+    en: 'Profile updated successfully',
+    bn: 'প্রোফাইল সফলভাবে আপডেট করা হয়েছে'
   },
-  'landing.feature1.title': {
-    en: 'Fast Processing',
-    bn: 'দ্রুত প্রক্রিয়াকরণ'
+  'profile.error': {
+    en: 'Failed to update profile',
+    bn: 'প্রোফাইল আপডেট করতে ব্যর্থ হয়েছে'
   },
-  'landing.feature1.description': {
-    en: 'Get instant summaries of your Bengali text in just seconds',
-    bn: 'মাত্র কয়েক সেকেন্ডে আপনার বাংলা টেক্সটের তাৎক্ষণিক সারাংশ পান'
+  'common.loading': {
+    en: 'Loading...',
+    bn: 'লোড হচ্ছে...'
   },
-  'landing.feature2.title': {
-    en: 'Accurate Results',
-    bn: 'সঠিক ফলাফল'
+  'toast.success.title': {
+    en: 'Success',
+    bn: 'সফল'
   },
-  'landing.feature2.description': {
-    en: 'Our AI understands Bengali context and nuances for better summaries',
-    bn: 'আমাদের এআই বাংলা প্রসঙ্গ এবং সূক্ষ্মতা বোঝে ভালো সারাংশের জন্য'
+  'toast.success.description': {
+    en: 'Your text has been summarized successfully.',
+    bn: 'আপনার টেক্সট সফলভাবে সংক্ষিপ্ত করা হয়েছে।'
   },
-  'landing.feature3.title': {
-    en: 'Mobile Friendly',
-    bn: 'মোবাইল বান্ধব'
+  'toast.error.title': {
+    en: 'Error',
+    bn: 'ত্রুটি'
   },
-  'landing.feature3.description': {
-    en: 'Use on any device, anytime, anywhere with our responsive design',
-    bn: 'আমাদের প্রতিক্রিয়াশীল ডিজাইনের সাথে যেকোনো ডিভাইসে, যেকোনো সময়, যেকোনো জায়গায় ব্যবহার করুন'
-  },
-  'landing.howItWorks': {
-    en: 'How It Works',
-    bn: 'এটি কীভাবে কাজ করে'
-  },
-  'landing.step1.title': {
-    en: 'Paste Your Text',
-    bn: 'আপনার টেক্সট পেস্ট করুন'
-  },
-  'landing.step1.description': {
-    en: 'Enter or paste the Bengali text you want to summarize',
-    bn: 'আপনি যে বাংলা টেক্সট সংক্ষিপ্ত করতে চান তা লিখুন বা পেস্ট করুন'
-  },
-  'landing.step2.title': {
-    en: 'Choose Options',
-    bn: 'বিকল্পগুলি বেছে নিন'
-  },
-  'landing.step2.description': {
-    en: 'Select your desired summary length and style',
-    bn: 'আপনার পছন্দসই সারাংশের দৈর্ঘ্য এবং শৈলী নির্বাচন করুন'
-  },
-  'landing.step3.title': {
-    en: 'Get Summary',
-    bn: 'সারাংশ পান'
-  },
-  'landing.step3.description': {
-    en: 'Receive your polished Bengali summary instantly',
-    bn: 'আপনার মসৃণ বাংলা সারাংশ অবিলম্বে পান'
-  },
-  'landing.about': {
-    en: 'About',
-    bn: 'সম্পর্কে'
-  },
-  'landing.contact': {
-    en: 'Contact',
-    bn: 'যোগাযোগ'
-  },
-  'landing.privacy': {
-    en: 'Privacy',
-    bn: 'গোপনীয়তা'
-  },
-  'landing.copyright': {
-    en: '© 2023 BengaliBytes. All rights reserved.',
-    bn: '© ২০২৩ বাংলা বাইটস। সর্বস্বত্ব সংরক্ষিত।'
+  'toast.error.description': {
+    en: 'There was an error summarizing your text. Please try again.',
+    bn: 'আপনার টেক্সট সংক্ষিপ্ত করার সময় একটি ত্রুটি ছিল। অনুগ্রহ করে আবার চেষ্টা করুন।'
   },
   'auth.signIn.heading': {
     en: 'Sign in to your account',
@@ -234,25 +195,93 @@ const translations: Translations = {
     en: 'There was an error creating your account. Please try again.',
     bn: 'আপনার অ্যাকাউন্ট তৈরি করার সময় একটি ত্রুটি ছিল। অনুগ্রহ করে আবার চেষ্টা করুন।'
   },
-  'common.loading': {
-    en: 'Loading...',
-    bn: 'লোড হচ্ছে...'
+  'landing.heading': {
+    en: 'Simplify Bengali Text with AI',
+    bn: 'এআই দিয়ে বাংলা টেক্সট সরলীকরণ করুন'
   },
-  'toast.success.title': {
-    en: 'Success',
-    bn: 'সফল'
+  'landing.subheading': {
+    en: 'Transform complex Bengali text into clear, concise summaries instantly',
+    bn: 'জটিল বাংলা টেক্সট তাৎক্ষণিকভাবে পরিষ্কার, সংক্ষিপ্ত সারাংশে রূপান্তর করুন'
   },
-  'toast.success.description': {
-    en: 'Your text has been summarized successfully.',
-    bn: 'আপনার টেক্সট সফলভাবে সংক্ষিপ্ত করা হয়েছে।'
+  'landing.startFree': {
+    en: 'Start for Free',
+    bn: 'বিনামূল্যে শুরু করুন'
   },
-  'toast.error.title': {
-    en: 'Error',
-    bn: 'ত্রুটি'
+  'landing.signIn': {
+    en: 'Sign In',
+    bn: 'সাইন ইন'
   },
-  'toast.error.description': {
-    en: 'There was an error summarizing your text. Please try again.',
-    bn: 'আপনার টেক্সট সংক্ষিপ্ত করার সময় একটি ত্রুটি ছিল। অনুগ্রহ করে আবার চেষ্টা করুন।'
+  'landing.cta': {
+    en: 'Get Started',
+    bn: 'শুরু করুন'
+  },
+  'landing.feature1.title': {
+    en: 'Fast Processing',
+    bn: 'দ্রুত প্রক্রিয়াকরণ'
+  },
+  'landing.feature1.description': {
+    en: 'Get instant summaries of your Bengali text in just seconds',
+    bn: 'মাত্র কয়েক সেকেন্ডে আপনার বাংলা টেক্সটের তাৎক্ষণিক সারাংশ পান'
+  },
+  'landing.feature2.title': {
+    en: 'Accurate Results',
+    bn: 'সঠিক ফলাফল'
+  },
+  'landing.feature2.description': {
+    en: 'Our AI understands Bengali context and nuances for better summaries',
+    bn: 'আমাদের এআই বাংলা প্রসঙ্গ এবং সূক্ষ্মতা বোঝে ভালো সারাংশের জন্য'
+  },
+  'landing.feature3.title': {
+    en: 'Mobile Friendly',
+    bn: 'মোবাইল বান্ধব'
+  },
+  'landing.feature3.description': {
+    en: 'Use on any device, anytime, anywhere with our responsive design',
+    bn: 'আমাদের প্রতিক্রিয়াশীল ডিজাইনের সাথে যেকোনো ডিভাইসে, যেকোনো সময়, যেকোনো জায়গায় ব্যবহার করুন'
+  },
+  'landing.howItWorks': {
+    en: 'How It Works',
+    bn: 'এটি কীভাবে কাজ করে'
+  },
+  'landing.step1.title': {
+    en: 'Paste Your Text',
+    bn: 'আপনার টেক্সট পেস্ট করুন'
+  },
+  'landing.step1.description': {
+    en: 'Enter or paste the Bengali text you want to summarize',
+    bn: 'আপনি যে বাংলা টেক্সট সংক্ষিপ্ত করতে চান তা লিখুন বা পেস্ট করুন'
+  },
+  'landing.step2.title': {
+    en: 'Choose Options',
+    bn: 'বিকল্পগুলি বেছে নিন'
+  },
+  'landing.step2.description': {
+    en: 'Select your desired summary length and style',
+    bn: 'আপনার পছন্দসই সারাংশের দৈর্ঘ্য এবং শৈলী নির্বাচন করুন'
+  },
+  'landing.step3.title': {
+    en: 'Get Summary',
+    bn: 'সারাংশ পান'
+  },
+  'landing.step3.description': {
+    en: 'Receive your polished Bengali summary instantly',
+    bn: 'আপনার মসৃণ বাংলা সারাংশ অবিলম্বে পান'
+  },
+  'landing.about': {
+    en: 'About',
+    bn: 'সম্পর্কে'
+  },
+  'landing.contact': {
+    en: 'Contact',
+    bn: 'যোগাযোগ'
+  },
+  'landing.privacy': {
+    en: 'Privacy',
+    bn: 'গোপনীয়তা'
+  },
+  'landing.copyright': {
+    en: '© 2023 BengaliBytes. All rights reserved.',
+    bn: '© ২০২৩ বাংলা বাইটস। সর্বস্বত্ব সংরক্ষিত।'
   },
 };
 
@@ -267,6 +296,19 @@ const LanguageContext = createContext<LanguageContextProps | undefined>(undefine
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
 
+  useEffect(() => {
+    // Try to get language preference from localStorage
+    const savedLang = localStorage.getItem('language') as Language;
+    if (savedLang && (savedLang === 'en' || savedLang === 'bn')) {
+      setLanguage(savedLang);
+    }
+  }, []);
+
+  const handleSetLanguage = (lang: Language) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
+
   const t = (key: string): string => {
     if (!translations[key]) {
       console.warn(`Translation missing for key: ${key}`);
@@ -276,7 +318,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
