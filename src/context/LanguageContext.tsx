@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from 'react';
 
 type Language = 'en' | 'bn';
@@ -23,6 +22,22 @@ const translations: Translations = {
     en: 'Home',
     bn: 'হোম'
   },
+  'app.signIn': {
+    en: 'Sign In',
+    bn: 'সাইন ইন'
+  },
+  'app.signOut': {
+    en: 'Sign Out',
+    bn: 'সাইন আউট'
+  },
+  'app.register': {
+    en: 'Register',
+    bn: 'নিবন্ধন'
+  },
+  'app.beta': {
+    en: 'BETA',
+    bn: 'বেটা'
+  },
   'auth.signIn.link': {
     en: 'Sign In',
     bn: 'সাইন ইন'
@@ -43,9 +58,93 @@ const translations: Translations = {
     en: 'Your History',
     bn: 'আপনার ইতিহাস'
   },
+  'landing.heading': {
+    en: 'Simplify Bengali Text with AI',
+    bn: 'এআই দিয়ে বাংলা টেক্সট সরলীকরণ করুন'
+  },
+  'landing.subheading': {
+    en: 'Transform complex Bengali text into clear, concise summaries instantly',
+    bn: 'জটিল বাংলা টেক্সট তাৎক্ষণিকভাবে পরিষ্কার, সংক্ষিপ্ত সারাংশে রূপান্তর করুন'
+  },
+  'landing.startFree': {
+    en: 'Start for Free',
+    bn: 'বিনামূল্যে শুরু করুন'
+  },
+  'landing.signIn': {
+    en: 'Sign In',
+    bn: 'সাইন ইন'
+  },
   'landing.cta': {
     en: 'Get Started',
     bn: 'শুরু করুন'
+  },
+  'landing.feature1.title': {
+    en: 'Fast Processing',
+    bn: 'দ্রুত প্রক্রিয়াকরণ'
+  },
+  'landing.feature1.description': {
+    en: 'Get instant summaries of your Bengali text in just seconds',
+    bn: 'মাত্র কয়েক সেকেন্ডে আপনার বাংলা টেক্সটের তাৎক্ষণিক সারাংশ পান'
+  },
+  'landing.feature2.title': {
+    en: 'Accurate Results',
+    bn: 'সঠিক ফলাফল'
+  },
+  'landing.feature2.description': {
+    en: 'Our AI understands Bengali context and nuances for better summaries',
+    bn: 'আমাদের এআই বাংলা প্রসঙ্গ এবং সূক্ষ্মতা বোঝে ভালো সারাংশের জন্য'
+  },
+  'landing.feature3.title': {
+    en: 'Mobile Friendly',
+    bn: 'মোবাইল বান্ধব'
+  },
+  'landing.feature3.description': {
+    en: 'Use on any device, anytime, anywhere with our responsive design',
+    bn: 'আমাদের প্রতিক্রিয়াশীল ডিজাইনের সাথে যেকোনো ডিভাইসে, যেকোনো সময়, যেকোনো জায়গায় ব্যবহার করুন'
+  },
+  'landing.howItWorks': {
+    en: 'How It Works',
+    bn: 'এটি কীভাবে কাজ করে'
+  },
+  'landing.step1.title': {
+    en: 'Paste Your Text',
+    bn: 'আপনার টেক্সট পেস্ট করুন'
+  },
+  'landing.step1.description': {
+    en: 'Enter or paste the Bengali text you want to summarize',
+    bn: 'আপনি যে বাংলা টেক্সট সংক্ষিপ্ত করতে চান তা লিখুন বা পেস্ট করুন'
+  },
+  'landing.step2.title': {
+    en: 'Choose Options',
+    bn: 'বিকল্পগুলি বেছে নিন'
+  },
+  'landing.step2.description': {
+    en: 'Select your desired summary length and style',
+    bn: 'আপনার পছন্দসই সারাংশের দৈর্ঘ্য এবং শৈলী নির্বাচন করুন'
+  },
+  'landing.step3.title': {
+    en: 'Get Summary',
+    bn: 'সারাংশ পান'
+  },
+  'landing.step3.description': {
+    en: 'Receive your polished Bengali summary instantly',
+    bn: 'আপনার মসৃণ বাংলা সারাংশ অবিলম্বে পান'
+  },
+  'landing.about': {
+    en: 'About',
+    bn: 'সম্পর্কে'
+  },
+  'landing.contact': {
+    en: 'Contact',
+    bn: 'যোগাযোগ'
+  },
+  'landing.privacy': {
+    en: 'Privacy',
+    bn: 'গোপনীয়তা'
+  },
+  'landing.copyright': {
+    en: '© 2023 BengaliBytes. All rights reserved.',
+    bn: '© ২০২৩ বাংলা বাইটস। সর্বস্বত্ব সংরক্ষিত।'
   },
   'auth.signIn.heading': {
     en: 'Sign in to your account',
@@ -138,6 +237,22 @@ const translations: Translations = {
   'common.loading': {
     en: 'Loading...',
     bn: 'লোড হচ্ছে...'
+  },
+  'toast.success.title': {
+    en: 'Success',
+    bn: 'সফল'
+  },
+  'toast.success.description': {
+    en: 'Your text has been summarized successfully.',
+    bn: 'আপনার টেক্সট সফলভাবে সংক্ষিপ্ত করা হয়েছে।'
+  },
+  'toast.error.title': {
+    en: 'Error',
+    bn: 'ত্রুটি'
+  },
+  'toast.error.description': {
+    en: 'There was an error summarizing your text. Please try again.',
+    bn: 'আপনার টেক্সট সংক্ষিপ্ত করার সময় একটি ত্রুটি ছিল। অনুগ্রহ করে আবার চেষ্টা করুন।'
   },
 };
 
