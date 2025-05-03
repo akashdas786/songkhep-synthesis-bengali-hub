@@ -85,10 +85,14 @@ const Dashboard: React.FC = () => {
     try {
       const summary = await summarizeText(text, level);
       
+      // Generate a unique ID for the insert
+      const newId = uuidv4();
+      
       // Save to Supabase
       const { data: savedItem, error } = await supabase
         .from('summaries')
         .insert({
+          id: newId,
           text,
           summary,
           user_id: user.id,

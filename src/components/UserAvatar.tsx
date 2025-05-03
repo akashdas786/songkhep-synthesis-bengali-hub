@@ -29,7 +29,7 @@ export const UserAvatar: React.FC = () => {
     if (!user) return;
     
     const fetchProfile = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('profiles')
         .select('id, name, avatar_url')
         .eq('id', user.id)
@@ -37,6 +37,8 @@ export const UserAvatar: React.FC = () => {
       
       if (data) {
         setProfile(data);
+      } else if (error) {
+        console.error("Error fetching profile:", error);
       }
     };
     
