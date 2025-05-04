@@ -75,6 +75,18 @@ const translations: Translations = {
     en: 'Upload Photo',
     bn: 'ছবি আপলোড করুন'
   },
+  'profile.uploading': {
+    en: 'Uploading...',
+    bn: 'আপলোড হচ্ছে...'
+  },
+  'profile.photo.uploaded': {
+    en: 'Photo uploaded successfully',
+    bn: 'ছবি সফলভাবে আপলোড করা হয়েছে'
+  },
+  'profile.photo.error': {
+    en: 'Error uploading photo',
+    bn: 'ছবি আপলোড করতে ত্রুটি'
+  },
   'profile.save': {
     en: 'Save Changes',
     bn: 'পরিবর্তন সংরক্ষণ করুন'
@@ -86,6 +98,10 @@ const translations: Translations = {
   'profile.error': {
     en: 'Failed to update profile',
     bn: 'প্রোফাইল আপডেট করতে ব্যর্থ হয়েছে'
+  },
+  'profile.description': {
+    en: 'Update your profile information',
+    bn: 'আপনার প্রোফাইল তথ্য আপডেট করুন'
   },
   'common.loading': {
     en: 'Loading...',
@@ -106,6 +122,18 @@ const translations: Translations = {
   'toast.error.description': {
     en: 'There was an error summarizing your text. Please try again.',
     bn: 'আপনার টেক্সট সংক্ষিপ্ত করার সময় একটি ত্রুটি ছিল। অনুগ্রহ করে আবার চেষ্টা করুন।'
+  },
+  'toast.copy.title': {
+    en: 'Copied',
+    bn: 'কপি করা হয়েছে'
+  },
+  'toast.copy.summary': {
+    en: 'Summary copied to clipboard',
+    bn: 'সারাংশ ক্লিপবোর্ডে কপি করা হয়েছে'
+  },
+  'toast.copy.original': {
+    en: 'Original text copied to clipboard',
+    bn: 'মূল টেক্সট ক্লিপবোর্ডে কপি করা হয়েছে'
   },
   'auth.signIn.heading': {
     en: 'Sign in to your account',
@@ -295,6 +323,38 @@ const translations: Translations = {
     en: 'Bengali',
     bn: 'বাংলা'
   },
+  'input.label': {
+    en: 'Enter your Bengali text',
+    bn: 'আপনার বাংলা টেক্সট লিখুন'
+  },
+  'input.placeholder': {
+    en: 'Paste or type your Bengali text here...',
+    bn: 'আপনার বাংলা টেক্সট এখানে পেস্ট করুন বা টাইপ করুন...'
+  },
+  'summarize.level': {
+    en: 'Summary Length',
+    bn: 'সারাংশের দৈর্ঘ্য'
+  },
+  'summarize.processing': {
+    en: 'Processing...',
+    bn: 'প্রক্রিয়া করা হচ্ছে...'
+  },
+  'summarize.button': {
+    en: 'Summarize',
+    bn: 'সংক্ষিপ্ত করুন'
+  },
+  'summary.title': {
+    en: 'Summary',
+    bn: 'সারাংশ'
+  },
+  'summary.original': {
+    en: 'Original Text',
+    bn: 'মূল টেক্সট'
+  },
+  'summary.copy': {
+    en: 'Copy to clipboard',
+    bn: 'ক্লিপবোর্ডে কপি করুন'
+  }
 };
 
 interface LanguageContextProps {
