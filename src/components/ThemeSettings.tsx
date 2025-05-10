@@ -68,7 +68,7 @@ export const ThemeSettings: React.FC = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] glass-dropdown">
         <DialogHeader className="flex items-start justify-between">
-          <DialogTitle className="bengali-heading">Theme Settings</DialogTitle>
+          <DialogTitle className="bengali-heading">Color Theme</DialogTitle>
           <Button 
             variant="ghost" 
             size="icon" 

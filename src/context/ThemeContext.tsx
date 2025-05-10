@@ -80,6 +80,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const setThemeColor = (color: ThemeColor, customColor?: string) => {
+    // Important: Preserve the current mode when changing color
     const newTheme = { 
       ...theme, 
       color, 
