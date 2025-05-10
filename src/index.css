@@ -46,6 +46,34 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 48 100% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --theme-custom-color: #E63946;
+  }
+
+  /* Theme colors - red theme is default */
+  html[data-theme-color="red"] {
+    --primary: 355 78% 56%;
+    --sidebar-primary: 355 78% 56%;
+  }
+
+  html[data-theme-color="green"] {
+    --primary: 173 58% 39%;
+    --sidebar-primary: 173 58% 39%;
+  }
+
+  html[data-theme-color="purple"] {
+    --primary: 282 59% 47%;
+    --sidebar-primary: 282 59% 47%;
+  }
+
+  html[data-theme-color="blue"] {
+    --primary: 203 42% 44%;
+    --sidebar-primary: 203 42% 44%;
+  }
+
+  html[data-theme-color="custom"] {
+    --primary: 0 0% 0%;
+    --sidebar-primary: 0 0% 0%;
   }
 
   .dark {
@@ -129,6 +157,19 @@
   
   .glass-dropdown {
     @apply backdrop-blur-md bg-white/90 dark:bg-gray-800/90 border border-white/20 dark:border-gray-700/30 shadow-xl;
+  }
+
+  /* History section */
+  .history-section {
+    @apply fixed right-0 top-0 h-full w-72 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-l border-gray-200/50 dark:border-gray-800/50 shadow-lg z-50 transform transition-transform duration-300;
+  }
+
+  .history-section.open {
+    @apply translate-x-0;
+  }
+
+  .history-section.closed {
+    @apply translate-x-full;
   }
 }
 

@@ -5,16 +5,16 @@ import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const ThemeToggle: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleMode } = useTheme();
 
   return (
     <Button 
-      onClick={toggleTheme} 
+      onClick={toggleMode} 
       variant="ghost" 
       size="icon"
       className="rounded-full transition-colors hover:bg-bengali-cream/10 dark:hover:bg-bengali-green/20"
     >
-      {theme === 'light' ? (
+      {theme.mode === 'light' ? (
         <Moon className="h-5 w-5 text-bengali-green" />
       ) : (
         <Sun className="h-5 w-5 text-bengali-gold" />

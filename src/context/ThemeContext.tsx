@@ -1,40 +1,91 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'light' | 'dark';
+type ThemeColor = 'red' | 'green' | 'purple' | 'blue' | 'custom';
+type ThemeMode = 'light' | 'dark';
+
+interface ThemeConfig {
+  mode: ThemeMode;
+  color: ThemeColor;
+  customColor?: string;
+}
 
 interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
+  theme: ThemeConfig;
+  toggleMode: () => void;
+  setThemeColor: (color: ThemeColor, customColor?: string) => void;
 }
+
+const defaultTheme: ThemeConfig = {
+  mode: 'light',
+  color: 'red', // Default theme color (bengali-red)
+};
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<ThemeConfig>(defaultTheme);
 
   useEffect(() => {
     // Load theme from localStorage or default to system preference
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+      try {
+        const parsedTheme = JSON.parse(savedTheme) as ThemeConfig;
+        setTheme(parsedTheme);
+        applyTheme(parsedTheme);
+      } catch (e) {
+        // If JSON parsing fails, use system preference for mode
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const newTheme = { ...defaultTheme, mode: prefersDark ? 'dark' : 'light' };
+        setTheme(newTheme);
+        applyTheme(newTheme);
+      }
     } else {
+      // No saved theme, use system preference for mode
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark ? 'dark' : 'light');
-      document.documentElement.classList.toggle('dark', prefersDark);
+      const newTheme = { ...defaultTheme, mode: prefersDark ? 'dark' : 'light' };
+      setTheme(newTheme);
+      applyTheme(newTheme);
     }
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+  const applyTheme = (themeConfig: ThemeConfig) => {
+    // Apply dark/light mode
+    document.documentElement.classList.toggle('dark', themeConfig.mode === 'dark');
+    
+    // Apply theme color
+    document.documentElement.setAttribute('data-theme-color', themeConfig.color);
+    
+    // Apply custom color if it exists
+    if (themeConfig.color === 'custom' && themeConfig.customColor) {
+      document.documentElement.style.setProperty('--theme-custom-color', themeConfig.customColor);
+    }
+  };
+
+  const toggleMode = () => {
+    const newTheme = { 
+      ...theme, 
+      mode: theme.mode === 'light' ? 'dark' : 'light' 
+    };
     setTheme(newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
-    localStorage.setItem('theme', newTheme);
+    applyTheme(newTheme);
+    localStorage.setItem('theme', JSON.stringify(newTheme));
+  };
+
+  const setThemeColor = (color: ThemeColor, customColor?: string) => {
+    const newTheme = { 
+      ...theme, 
+      color, 
+      customColor: color === 'custom' ? customColor : undefined 
+    };
+    setTheme(newTheme);
+    applyTheme(newTheme);
+    localStorage.setItem('theme', JSON.stringify(newTheme));
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleMode, setThemeColor }}>
       {children}
     </ThemeContext.Provider>
   );

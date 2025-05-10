@@ -4,6 +4,7 @@ import { TextInput } from '@/components/TextInput';
 import { Summary } from '@/components/Summary';
 import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
+import { History } from '@/components/History';
 import { EmptyState } from '@/components/EmptyState';
 import { summarizeText } from '@/utils/summarize';
 import { useToast } from '@/hooks/use-toast';
@@ -26,6 +27,7 @@ const Index: React.FC = () => {
   const [activeItem, setActiveItem] = useState<HistoryItem | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const { t } = useLanguage();
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -53,9 +55,9 @@ const Index: React.FC = () => {
         description: t('toast.success.description'),
       });
 
-      // Auto-open sidebar on mobile when first item is created
+      // Auto-open history on mobile when first item is created
       if (isMobile && history.length === 0) {
-        setSidebarOpen(true);
+        setHistoryOpen(true);
       }
     } catch (error) {
       toast({
@@ -70,16 +72,29 @@ const Index: React.FC = () => {
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
+    if (!sidebarOpen && isMobile) {
+      setHistoryOpen(false);
+    }
+  };
+
+  const toggleHistory = () => {
+    setHistoryOpen(!historyOpen);
+    if (!historyOpen && isMobile) {
+      setSidebarOpen(false);
+    }
   };
 
   // Create a handler function that correctly handles the type
   const handleSelectItem = (item: HistoryItem) => {
     setActiveItem(item);
+    if (isMobile) {
+      setHistoryOpen(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-background bengali-pattern">
-      <Header onToggleSidebar={toggleSidebar} />
+      <Header onToggleSidebar={toggleSidebar} onToggleHistory={toggleHistory} />
       
       <div className="relative flex">
         <Sidebar 
@@ -88,6 +103,14 @@ const Index: React.FC = () => {
           onSelectItem={handleSelectItem}
           isOpen={sidebarOpen}
           onToggle={toggleSidebar}
+        />
+
+        <History
+          isOpen={historyOpen}
+          onClose={toggleHistory}
+          history={history}
+          activeId={activeItem?.id || null}
+          onSelectItem={handleSelectItem}
         />
         
         <motion.div 

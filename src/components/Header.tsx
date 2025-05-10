@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { ThemeSettings } from '@/components/ThemeSettings';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, LogIn } from 'lucide-react';
+import { Menu, LogIn, History as HistoryIcon } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { useLanguage } from '@/context/LanguageContext';
@@ -11,9 +12,10 @@ import { UserAvatar } from '@/components/UserAvatar';
 
 interface HeaderProps {
   onToggleSidebar: () => void;
+  onToggleHistory: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
+export const Header: React.FC<HeaderProps> = ({ onToggleSidebar, onToggleHistory }) => {
   const { user } = useAuth();
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -43,8 +45,19 @@ export const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
         </div>
         
         <div className="flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hover:bg-white/20 dark:hover:bg-gray-800/50 transition-all duration-300"
+            onClick={onToggleHistory}
+          >
+            <HistoryIcon className="h-5 w-5" />
+            <span className="sr-only">Toggle history</span>
+          </Button>
+          
           <div className="h-6 w-px bg-gray-200/50 dark:bg-gray-700/50 mx-1 hidden md:block"></div>
           <LanguageToggle />
+          <ThemeSettings />
           <ThemeToggle />
           
           {user ? (

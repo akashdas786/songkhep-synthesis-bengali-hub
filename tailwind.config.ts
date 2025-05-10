@@ -69,6 +69,34 @@ export default {
 					green: '#1D3557',
 					blue: '#457B9D',
 					cream: '#F1FAEE',
+				},
+				// Theme color palettes
+				theme: {
+					red: {
+						primary: '#E63946',
+						secondary: '#FFB347',
+						accent: '#1D3557',
+					},
+					green: {
+						primary: '#2A9D8F',
+						secondary: '#E9C46A',
+						accent: '#264653',
+					},
+					purple: {
+						primary: '#8E44AD',
+						secondary: '#F1C40F',
+						accent: '#2C3E50',
+					},
+					blue: {
+						primary: '#457B9D',
+						secondary: '#FFB347',
+						accent: '#1D3557',
+					},
+					custom: {
+						primary: 'var(--theme-custom-color)',
+						secondary: '#FFB347',
+						accent: '#1D3557',
+					},
 				}
 			},
 			fontFamily: {
