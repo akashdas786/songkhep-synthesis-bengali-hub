@@ -5,7 +5,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
-import { Clock } from 'lucide-react';
 
 interface HistoryItem {
   id: string;
@@ -47,8 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
           >
             <div className="flex items-center justify-between p-4 border-b border-sidebar-border/50 backdrop-blur-sm">
-              <h2 className="text-lg font-medium text-sidebar-foreground bengali-heading flex items-center gap-2">
-                <Clock className="h-5 w-5" />
+              <h2 className="text-lg font-medium text-sidebar-foreground bengali-heading">
                 {t('sidebar.history')}
               </h2>
               <Button
@@ -120,18 +118,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
           onClick={onToggle}
         />
       )}
-      
-      {/* Toggle button for desktop */}
-      <motion.button
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        className={`fixed left-0 top-20 z-10 p-2 bg-sidebar-accent/70 hover:bg-sidebar-accent text-sidebar-foreground rounded-r-md shadow-md backdrop-blur-sm hidden lg:flex items-center justify-center ${isOpen ? 'lg:hidden' : ''}`}
-        onClick={onToggle}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <Clock className="h-5 w-5" />
-      </motion.button>
     </>
   );
 };
