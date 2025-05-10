@@ -5,6 +5,7 @@ import { Summary } from '@/components/Summary';
 import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
 import { EmptyState } from '@/components/EmptyState';
+import { History } from '@/components/History';
 import { summarizeText } from '@/utils/summarize';
 import { useToast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,6 +29,7 @@ const Dashboard: React.FC = () => {
   const [activeItem, setActiveItem] = useState<HistoryItem | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const { t } = useLanguage();
   const { toast } = useToast();
   const isMobile = useIsMobile();
@@ -139,6 +141,10 @@ const Dashboard: React.FC = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const toggleHistory = () => {
+    setHistoryOpen(!historyOpen);
+  };
+
   // Create a handler function that correctly handles the type
   const handleSelectItem = (item: HistoryItem) => {
     setActiveItem(item);
@@ -146,7 +152,10 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background bengali-pattern">
-      <Header onToggleSidebar={toggleSidebar} />
+      <Header 
+        onToggleSidebar={toggleSidebar}
+        onToggleHistory={toggleHistory}  
+      />
       
       <div className="relative flex">
         <Sidebar 
@@ -155,6 +164,14 @@ const Dashboard: React.FC = () => {
           onSelectItem={handleSelectItem}
           isOpen={sidebarOpen}
           onToggle={toggleSidebar}
+        />
+
+        <History
+          isOpen={historyOpen}
+          onClose={toggleHistory}
+          history={history}
+          activeId={activeItem?.id || null}
+          onSelectItem={handleSelectItem}
         />
         
         <motion.div 

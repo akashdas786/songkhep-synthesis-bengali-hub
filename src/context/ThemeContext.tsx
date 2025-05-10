@@ -37,14 +37,20 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       } catch (e) {
         // If JSON parsing fails, use system preference for mode
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const newTheme = { ...defaultTheme, mode: prefersDark ? 'dark' : 'light' };
+        const newTheme = { 
+          ...defaultTheme, 
+          mode: prefersDark ? 'dark' as ThemeMode : 'light' as ThemeMode 
+        };
         setTheme(newTheme);
         applyTheme(newTheme);
       }
     } else {
       // No saved theme, use system preference for mode
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const newTheme = { ...defaultTheme, mode: prefersDark ? 'dark' : 'light' };
+      const newTheme = { 
+        ...defaultTheme, 
+        mode: prefersDark ? 'dark' as ThemeMode : 'light' as ThemeMode 
+      };
       setTheme(newTheme);
       applyTheme(newTheme);
     }
@@ -66,7 +72,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const toggleMode = () => {
     const newTheme = { 
       ...theme, 
-      mode: theme.mode === 'light' ? 'dark' : 'light' 
+      mode: theme.mode === 'light' ? 'dark' as ThemeMode : 'light' as ThemeMode 
     };
     setTheme(newTheme);
     applyTheme(newTheme);
