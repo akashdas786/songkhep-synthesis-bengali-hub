@@ -5,6 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import { useTheme } from '@/context/ThemeContext';
 
 interface HistoryItem {
   id: string;
@@ -31,6 +32,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onToggle,
 }) => {
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   return (
     <>
@@ -80,7 +82,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           {item.text.length > 50 ? `${item.text.substring(0, 50)}...` : item.text}
                         </div>
                         {item.level && (
-                          <span className="text-xs px-1.5 py-0.5 bg-bengali-red/20 text-bengali-red rounded ml-1 whitespace-nowrap">
+                          <span className={`text-xs px-1.5 py-0.5 rounded ml-1 whitespace-nowrap ${
+                            theme.color === 'custom' 
+                              ? 'bg-opacity-20 text-sidebar-foreground' 
+                              : `bg-${theme.color}-500/20 text-${theme.color}-500`
+                          }`}>
                             {item.level}x
                           </span>
                         )}
